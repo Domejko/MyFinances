@@ -1,4 +1,4 @@
-name: tests
+name: Backend Tests
 on:
   push:
     branches:
@@ -9,9 +9,10 @@ on:
 jobs:
   test:
     name: test
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [windows-latest]
         python-version: ["3.10", "3.11", "3.12"]
         django-version: ["4", "5"]
     steps:
@@ -68,5 +69,5 @@ jobs:
       - name: Run tests
         run: |
           source .venv/bin/activate
-          python3 manage.py test --parallel --debug-mode
+          python3 manage.py test --parallel
 
