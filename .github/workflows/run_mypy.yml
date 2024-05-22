@@ -35,5 +35,5 @@ jobs:
         run: poetry install --no-interaction --no-root
       - name: Run mypy checks
         run: |
-          source .venv/bit/activate
+          source .venv/bin/activate
           mypy .
