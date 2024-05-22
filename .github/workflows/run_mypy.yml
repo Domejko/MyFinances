@@ -23,39 +23,15 @@ jobs:
           virtualenvs-create: true
           virtualenvs-in-project: true
           installer-parallel: true
-      - name: Load cached venv
-        id: cached-poetry-dependencies
-        uses: actions/cache@v4.0.2
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+#      - name: Load cached venv
+#        id: cached-poetry-dependencies
+#        uses: actions/cache@v4.0.2
+#        with:
+#          path: .venv
+#          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root
-      - name: Install dependencies and build frontend
-        run: |
-          npm ci
-          npm run tailwind-build
-          npm run webpack-build
-
-          if [ -f frontend/static/src/output.css ]; then
-            echo "output.css is created"
-          else
-            echo "output.css is not created"
-            exit 1
-          fi
-          if [ -d frontend/static/js/c/ ]; then
-            echo "webpack has been built"
-          else
-            echo "frontend/static/js/c/ was not created from webpack build"
-            exit 1
-          fi
-          if [ -f webpack-stats.json ]; then
-            echo "webpack has built webpack-stats to work with chunks"
-          else
-            echo "webpack-stats was not built so cannot work with chunks"
-            exit 1
-          fi
       - name: Run mypy checks
         run: |
           source .venv/bin/activate
