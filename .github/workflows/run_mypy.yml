@@ -16,11 +16,10 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v5.1.0
         with:
-          python-version: "3.12"
+          python-version: 3.12
       - name: Install and configure Poetry
         uses: snok/install-poetry@v1
         with:
-          version: 1.8.0
           virtualenvs-create: true
           virtualenvs-in-project: true
           installer-parallel: true
@@ -36,4 +35,4 @@ jobs:
       - name: Run mypy checks
         run: |
           source .venv/bin/activate
-          mypy .
+          mypy --no-incremental .
