@@ -10,6 +10,15 @@ jobs:
   mypy:
     name: mypy
     runs-on: ubuntu-latest
+    env:
+      SECRET_KEY: "some!random!secret!key!use!online!generator!to!get"
+      URL: "127.0.0.1"
+      PROXY_IP: "localhost"
+      BRANCH: "debug"
+      DEBUG: "true"
+      DATABASE_TYPE: "sqlite3"
+      SITE_URL: "http://myfinances.example.com"
+      SITE_NAME: "myfinances"
     steps:
       - name: Clone repo
         uses: actions/checkout@v4.1.6
@@ -35,4 +44,4 @@ jobs:
       - name: Run mypy checks
         run: |
           source .venv/bin/activate
-          mypy --ignore-missing-imports .
+          mypy .
