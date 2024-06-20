@@ -2,6 +2,7 @@ from typing import Literal
 
 from django.contrib import messages
 from django.core.exceptions import ValidationError
+from django.http import HttpResponseRedirect
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_http_methods
@@ -10,8 +11,10 @@ from backend.service.clients.delete import delete_client
 from backend.service.clients.validate import validate_client
 from backend.types.htmx import HtmxHttpRequest
 from backend.models import Client
+from backend.utils.decorators import team_permission_required
 
 
+@team_permission_required(redirect_url="dashboard", permission="backend.view_client")
 @require_http_methods(["GET"])
 def client_detail_endpoint(request: HtmxHttpRequest, id):
     try:
@@ -23,11 +26,12 @@ def client_detail_endpoint(request: HtmxHttpRequest, id):
     return render(request, "pages/clients/detail/dashboard.html", {"client": client})
 
 
+@team_permission_required(redirect_url="dashboard", permission="backend.delete_client")
 @require_http_methods(["DELETE"])
 def delete_client_endpoint(request: HtmxHttpRequest, id) -> HttpResponse:
     response: str | Literal[True] = delete_client(request, id)
 
-    if isinstance(response, str):
+    if isinstance(response, str) or isinstance(response, HttpResponseRedirect):
         messages.error(request, f"Failed to delete the client {id}: {response}")
     else:
         messages.success(request, f"Successfully deleted client #{id}")

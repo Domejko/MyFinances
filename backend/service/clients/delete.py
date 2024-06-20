@@ -4,8 +4,10 @@ from backend.service.clients.validate import validate_client
 from django.core.exceptions import ValidationError, PermissionDenied
 
 from backend.models import Client, AuditLog
+from backend.utils.decorators import team_permission_required
 
 
+@team_permission_required(redirect_url="dashboard", permission="backend.delete_client")
 def delete_client(request, client_id) -> str | Literal[True]:
     """
 

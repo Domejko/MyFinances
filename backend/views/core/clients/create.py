@@ -1,11 +1,12 @@
 from django.contrib import messages
-from django.contrib.auth.models import AnonymousUser
 from django.shortcuts import render, redirect
 
 from backend.models import Client
 from backend.types.htmx import HtmxHttpRequest
+from backend.utils.decorators import team_permission_required
 
 
+@team_permission_required(redirect_url="clients:dashboard")
 def create_client_endpoint(request: HtmxHttpRequest):
     if request.method == "GET":
         return render(request, "pages/clients/create/create.html")

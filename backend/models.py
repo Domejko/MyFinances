@@ -146,6 +146,12 @@ class Team(models.Model):
     members = models.ManyToManyField(User, related_name="teams_joined")
 
 
+class TeamPermissions(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_perms")
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    permissions = models.CharField(max_length=100)
+
+
 class TeamInvitation(models.Model):
     code = models.CharField(max_length=10)
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="team_invitations")

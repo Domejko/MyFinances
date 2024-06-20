@@ -31,6 +31,7 @@ from backend.models import (
     ReceiptDownloadToken,
     EmailSendStatus,
     InvoiceReminder,
+    TeamPermissions,
 )
 
 # from django.contrib.auth.models imp/ort User
@@ -58,6 +59,7 @@ admin.site.register(
         Receipt,
         ReceiptDownloadToken,
         InvoiceReminder,
+        TeamPermissions,
     ]
 )
 

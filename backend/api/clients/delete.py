@@ -9,10 +9,12 @@ from django.views.decorators.http import require_http_methods
 from backend.models import Client
 from backend.service.clients.delete import delete_client
 from backend.types.htmx import HtmxHttpRequest
+from backend.utils.decorators import team_permission_required
 
 
 @require_http_methods(["DELETE"])
 @login_required
+@team_permission_required(redirect_url="dashboard", permission="backend.delete_client")
 def client_delete(request: HtmxHttpRequest, id: int):
     response: str | Literal[True] = delete_client(request, id)
 

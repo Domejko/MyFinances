@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 
 from backend.models import Invoice
 from backend.types.htmx import HtmxHttpRequest
+from backend.utils.decorators import team_permission_required
 
 
 def invoices_dashboard(request: HtmxHttpRequest):

@@ -1,4 +1,5 @@
 <div hx-swap-oob='innerHTML:[data-htmx-swap="logged_in_for"]'>
+    {% csrf_token %}
     {% if request.user.logged_in_as_team %}
         <h2 class="text-xl mb-1">Organization</h2>
         <h2 class="text-md">

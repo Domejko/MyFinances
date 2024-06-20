@@ -1,4 +1,5 @@
 <div data-layout="icon_dropdown_items">
+    {% csrf_token %}
     <li hx-boost="true">
         <a {% if request.resolver_match.url_name == "user settings" %}class="active btn-disabled"{% endif %}
            href="{% url 'user settings' %}">
